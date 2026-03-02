@@ -27,7 +27,8 @@ block content
               label(for="content") Your Comment
               textarea#content(name="content" rows="4" required)
             button.btn.btn-primary(type="submit") Submit Comment
-            p.note Your comment will be pending approval before it appears.
+            if commentSubmitted
+              p.note Comment submitted — pending approval.
       else
         .login-prompt
           p 

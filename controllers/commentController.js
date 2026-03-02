@@ -24,8 +24,8 @@ try {
     
     await comment.save();
     
-    // Redirect back to post
-  res.redirect(`/post/${postId}`);
+    // Redirect back to post with a flag so the page can show a one-time confirmation
+  res.redirect(`/post/${postId}?comment_submitted=1`);
 } catch (error) {
   console.log(error);
   res.status(500).render("error", { message: 'Error creating comment' });

@@ -105,6 +105,7 @@ exports.show = async (req, res) => {
       relatedPosts,
       readingTimeMinutes,
       formattedDate,
+      commentSubmitted: Boolean(req.query.comment_submitted),
       viewCount: post.viewCount || 0
     });
   } catch (error) {
