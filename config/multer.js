@@ -5,7 +5,9 @@ const fs = require("fs").promises;
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-    cb(null, "public/images/uploads/temp/");
+    const uploadDir = "public/images/uploads/temp/";
+    fs.mkdir(uploadDir, { recursive: true }).catch(err => console.error(err));
+    cb(null, uploadDir);
   },
     filename: function (req, file, cb) {
 		const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9);
