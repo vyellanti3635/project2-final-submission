@@ -1,0 +1,30 @@
+extends ../layouts/main
+
+block content
+  .admin-comments
+      h1 Comment Moderation
+      p.subtitle Pending comments awaiting approval
+      
+      if comments && comments.length > 0
+        table.admin-table
+          thead
+            tr
+              th Author
+              th Post
+              th Comment
+              th Date
+              th Actions
+          tbody
+            each comment in comments
+              tr
+                td= comment.author.username
+                td= comment.post.title
+                td.comment-content= comment.content
+                td= comment.createdAt.toLocaleDateString()
+                td.actions
+                  form.inline-form(method='POST', action=`/admin/comments/${comment._id}/approve?_method=PUT`)
+                    button.btn-small.btn-success(type='submit') Approve
+                  form.inline-form(method='POST', action=`/admin/comments/${comment._id}?_method=DELETE`)
+                    button.btn-small.btn-danger(type='submit', onclick='return confirm("Are you sure you want to delete this comment?")') Delete
+      else
+        p.no-comments No pending comments found.

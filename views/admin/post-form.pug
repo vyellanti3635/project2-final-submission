@@ -1,0 +1,49 @@
+extends ../layouts/main
+
+block content
+  .admin-post-form
+    h1= post ? 'Edit Post' : 'Create New Post'
+    
+    if error
+      .error-message
+        p.error= error
+    
+    form.post-form(action=post ? `/admin/posts/${post._id}?_method=PUT` : '/admin/posts' method="POST" enctype="multipart/form-data")
+      .form-group
+        label(for="title") Title
+        input#title(
+          type="text"
+          name="title"
+          value=post ? post.title : ''
+          required
+          minlength="5"
+          maxlength="200"
+          placeholder="Enter post title"
+        )
+      
+      .form-group
+        label(for="content") Content
+        textarea#content(
+          name="content"
+          required
+          minlength="50"
+          rows="15"
+          placeholder="Write your blog post content here..."
+        )= post ? post.content : ''
+      
+      .form-group
+        label(for="image") Featured Image
+        if post && post.image
+          .current-image
+            p Current image:
+            img(src=post.image alt="Current post image" style="max-width: 300px; margin: 10px 0;")
+        input#image(
+          type="file"
+          name="image"
+          accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
+        )
+        small Accepted formats: JPEG, JPG, PNG, GIF, WEBP (Max 5MB)
+      
+      .form-actions
+        button.btn.btn-primary(type="submit")= post ? 'Update Post' : 'Create Post'
+        a.btn.btn-secondary(href="/admin") Cancel

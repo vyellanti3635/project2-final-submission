@@ -1,0 +1,12 @@
+extends layouts/main
+
+block content
+  .error-page
+    .error-container
+      h1.error-code 404
+      h2.error-title Page Not Found
+      p.error-message The page you're looking for doesn't exist or has been moved.
+      
+      .error-actions
+        a.btn.btn-primary(href="/") Go to Home
+        a.btn.btn-secondary(href="/search") Search Posts

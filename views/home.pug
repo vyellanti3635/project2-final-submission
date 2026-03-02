@@ -1,0 +1,44 @@
+extends layouts/main
+
+block content
+  .hero-section
+    h1 Personal Blog Platform
+    p Web Development Insights and Technology Tutorials
+  
+  .main-content-wrapper
+    .content-area
+      if posts && posts.length > 0
+        .posts-grid
+          each post in posts
+            .post-card
+              h2.post-title
+                a(href=`/post/${post._id}`)= post.title
+              .post-meta
+                span by #{post.author.username} | #{new Date(post.createdAt).toLocaleDateString()}
+              p.post-excerpt= post.excerpt
+              .post-footer
+                a.read-more(href=`/post/${post._id}`) Read More
+                span.view-count #{post.viewCount} views
+      else
+        .no-posts
+          p No blog posts available yet. Check back soon!
+    
+    aside.sidebar
+      .sidebar-section
+        h3.sidebar-title Categories
+        ul.sidebar-list
+          li.sidebar-item
+            a(href="/search?q=node") Node.js
+          li.sidebar-item
+            a(href="/search?q=mongodb") MongoDB
+          li.sidebar-item
+            a(href="/search?q=express") Express.js
+          li.sidebar-item
+            a(href="/search?q=frontend") Frontend
+          li.sidebar-item
+            a(href="/search?q=security") Security
+      
+      .sidebar-section
+        h3.sidebar-title Search
+        form.sidebar-search(action="/search" method="GET")
+          input(type="text" name="q" placeholder="Search posts..." required)

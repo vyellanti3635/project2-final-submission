@@ -1,0 +1,26 @@
+header.site-header
+  .header-container
+    .logo
+      a(href="/") Personal Blog
+    
+    nav.main-nav
+      ul
+        li
+          a(href="/") Home
+        li
+          a(href="/search") Search
+        li
+          a(href="/contact") Contact
+        
+        if user
+          if user.isAdmin
+            li
+              a(href="/admin") Admin Dashboard
+          li
+            a(href="/logout") Logout
+            span.user-info  (#{user.username})
+        else
+          li
+            a(href="/login") Login
+          li
+            a(href="/register") Register

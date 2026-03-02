@@ -1,0 +1,34 @@
+extends layouts/main
+
+block content
+  .search-page
+    h1 Search Results
+    
+    .search-form
+      form(action="/search" method="GET")
+        .form-group
+          input.search-input(type="text" name="q" value=query placeholder="Search blog posts..." required)
+          button.btn.btn-primary(type="submit") Search
+    
+    if query
+        p.result-count #{posts.length} post(s) found
+    
+    if posts && posts.length > 0
+      .posts-grid
+        each post in posts
+          .post-card
+            h2.post-title
+              a(href=`/post/${post._id}`)= post.title
+            .post-meta
+              span.post-author by #{post.author.username}
+              span.post-date= new Date(post.createdAt).toLocaleDateString()
+            p.post-excerpt= post.excerpt
+            .post-footer
+              a.read-more(href=`/post/${post._id}`) Read More
+              span.view-count #{post.viewCount} views
+    else if query
+      .no-results
+        p No posts found, sorry!
+    else
+      .search-prompt
+        p please enter something to search the posts.

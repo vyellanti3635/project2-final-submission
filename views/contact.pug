@@ -1,0 +1,83 @@
+extends layouts/main
+
+block content
+  .contact-page
+    h1.page-title Contact Us
+
+    .contact-content
+      .contact-form-section
+        if errors && errors.length > 0
+          .error-messages
+            each error in errors
+              p.error= error
+        
+        if success
+          .success-message
+            p.success= success
+        
+        form.contact-form(method='POST', action='/contact')
+          .form-group
+            label(for='name') Full Name 
+              span.required *
+            input#name(
+              type='text',
+              name='name',
+              value=name || '',
+              required,
+              minlength='2',
+              maxlength='50',
+              placeholder='full name'
+            )
+          
+          .form-group
+            label(for='email') Email Address 
+              span.required *
+            input#email(
+              type='email',
+              name='email',
+              value=email || '',
+              required,
+              placeholder='email address'
+            )
+          
+          .form-group
+            label(for='subject') Subject
+            input#subject(
+              type='text',
+              name='subject',
+              placeholder='subject'
+            )
+          
+          .form-group
+            label(for='message') Message 
+              span.required *
+            textarea#message(
+              name='message',
+              required,
+              minlength='10',
+              maxlength='1000',
+              rows='6',
+              placeholder='message ...'
+            )= message || ''
+          
+          button.btn.btn-primary(type='submit') Send Message
+      
+      .contact-info-section
+        h2.info-title Contact Information
+        
+        .info-item
+          .info-label Email
+          .info-value info@blogplatform.com
+        
+        .info-item
+          .info-label Phone
+          .info-value 123-456-7890
+        
+        .info-item
+          .info-label Address
+          .info-value
+            | 123 Street
+            br
+            | Austin, Tx 78758
+            br
+            | United States

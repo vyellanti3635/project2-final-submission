@@ -1,0 +1,47 @@
+extends layouts/main
+
+block content
+  .post-detail
+    article.post
+      h1.post-title= post.title
+      .post-meta
+        span.post-author by #{post.author.username}
+        span.post-date= new Date(post.createdAt).toLocaleDateString()
+        span.view-count #{post.viewCount} views
+      
+      if post.image
+        .post-featured-image
+          img(src=post.image alt=post.title)
+      
+      .post-content
+        p= post.content
+    
+    section.comments-section
+      h2 Comments (#{comments.length})
+      
+      if user
+        .comment-form
+          h3 Leave a Comment
+          form(action=`/post/${post._id}/comment` method="POST")
+            .form-group
+              label(for="content") Your Comment
+              textarea#content(name="content" rows="4" required)
+            button.btn.btn-primary(type="submit") Submit Comment
+            p.note Your comment will be pending approval before it appears.
+      else
+        .login-prompt
+          p 
+            a(href="/login") Log in
+            |  to leave a comment.
+      
+      .comments-list
+        if comments && comments.length > 0
+          each comment in comments
+            .comment
+              .comment-header
+                span.comment-author= comment.author.username
+                span.comment-date= new Date(comment.createdAt).toLocaleDateString()
+              .comment-content
+                p= comment.content
+        else
+          p.no-comments No comments yet. Be the first to comment!

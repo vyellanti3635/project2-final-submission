@@ -1,0 +1,15 @@
+extends layouts/main
+
+block content
+  .error-page
+    .error-container
+      h1.error-code= error.status || 500
+      h2.error-title Error
+      p.error-message= message
+      
+      if error.stack
+        .error-stack
+          pre= error.stack
+      
+      .error-actions
+        a.btn.btn-primary(href="/") Go to Home
